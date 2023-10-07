@@ -35,15 +35,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
         http.csrf((csrf->csrf.disable()))
-                .authorizeHttpRequests(auth->auth.requestMatchers(mvcMatcherBuilder.pattern("/welcome")).permitAll()
-                .anyRequest().authenticated())
+                .authorizeHttpRequests(auth->auth.requestMatchers(mvcMatcherBuilder.pattern("/**")).permitAll()
+                        )
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
 
 
 
-                return http.build();
+        return http.build();
 
 
     }
@@ -59,7 +59,7 @@ public class SecurityConfig {
         return authProvider;
 
     }
-
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }

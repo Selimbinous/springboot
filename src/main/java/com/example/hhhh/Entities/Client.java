@@ -34,6 +34,8 @@ public class Client implements UserDetails {
     private String mdp;
     @Column(name = "role")
     private String role;
+    @OneToMany(mappedBy = "client")
+    private List<Commande> commandes;
 
     public Client(String nom, String prenom, String email, String mdp, String role) {
         this.nom = nom;

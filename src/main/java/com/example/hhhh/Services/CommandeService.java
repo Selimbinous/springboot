@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CommandeService {
@@ -18,7 +19,7 @@ public class CommandeService {
     @Autowired
     private emailSenderservice emailsender;
     public Commande addcommande(Commande com){
-        List<Product> products = com.getProducts();
+        Set<Product> products = com.getProducts();
         products.forEach(product -> product.setQuantite(product.getQuantite()-1));
         if(products.size()>10){
             emailsender.sendEmail();
@@ -39,7 +40,7 @@ public class CommandeService {
         return com.get();
     }
     public Commande commandeupdate(int id,Commande com){
-        com.setId(id);
+        com.setComid(id);
         return commanderepo.save(com);
     }
     public void deletecommande(int id){

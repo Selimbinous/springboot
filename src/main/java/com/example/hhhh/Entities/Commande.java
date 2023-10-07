@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -15,14 +17,16 @@ import java.util.List;
 public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "comid")
+    private int comid;
     @Column(name = "prixtotal")
     private int prix_total;
-    @OneToMany
-    private List<Product> products;
+    @ManyToMany
+    @JoinTable(name = "Commande_Products",joinColumns = @JoinColumn(name = "commande_id"),
+    inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> products = new HashSet<>();
 
-    @OneToOne
+    @ManyToOne
     private Client client;
 
 }

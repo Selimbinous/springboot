@@ -27,7 +27,7 @@ public class ProductService {
         return product.get();
     }
     public Product productupdate(int id,Product prod){
-        prod.setId(id);
+        prod.setProid(id);
         return productrepo.save(prod);
     }
     public void deleteproduct(int id){
